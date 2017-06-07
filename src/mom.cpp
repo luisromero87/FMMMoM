@@ -88,8 +88,8 @@ void Mesh::FindRwgbf(void) {
                   rwgbf[rwgbf.size() - 1][3] = triangle[j][o];
                 }
               }
-              rwgbf[rwgbf.size() - 1][4] = m;
-              rwgbf[rwgbf.size() - 1][5] = n;
+              rwgbf[rwgbf.size() - 1][4] = i;
+              rwgbf[rwgbf.size() - 1][5] = j;
             }
           }
         }

@@ -31,11 +31,14 @@ file(GLOB SOURCES "${PROJECT_SOURCE_DIR}/src/*.cpp")
 # add the executable
 add_executable (FieldData  ${SOURCES} ${PROJECT_SOURCE_DIR}/src/FieldData.cxx)
 target_link_libraries(FieldData -larmadillo)
+target_link_libraries(FieldData -lconfig++)
 if(VTK_LIBRARIES)
   target_link_libraries(FieldData ${VTK_LIBRARIES})
 else()
   target_link_libraries(FieldData vtkHybrid vtkWidgets)
 endif()
+
+file(COPY ${PROJECT_SOURCE_DIR}/test DESTINATION ${PROJECT_BINARY_DIR})
 
 # add the install targets
 #install (TARGETS Tutorial DESTINATION bin)
