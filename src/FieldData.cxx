@@ -26,6 +26,8 @@
 #include <string>
 #include <armadillo>
 
+#include <cstdlib>
+
 #include <libconfig.h++>
 
 using namespace libconfig;
@@ -81,16 +83,24 @@ int main(int , char *[])
   }
 
 
-  string outputFilename;
+  string outputFolder;
   try
   {
-    outputFilename = cfg.lookup("settings.output").c_str();
-    cout << "output: " << outputFilename << endl << endl;
+    outputFolder = cfg.lookup("settings.output_folder").c_str();
+    cout << "output_folder: " << outputFolder << endl << endl;
   }
   catch (const SettingNotFoundException &nfex)
   {
     cerr << "No 'output' setting in configuration file." << endl;
   }
+
+ 
+const int dir_err = system((string("mkdir -p ")+outputFolder).c_str());
+if (-1 == dir_err)
+{
+    printf("Error creating directory!n");
+    exit(1);
+}
 
   vector<double> wavelength;
   if (cfg.exists("settings.wavelength")) {
@@ -230,7 +240,7 @@ int main(int , char *[])
 #else
   writer->SetInputData(polydata);
 #endif
-  writer->SetFileName(outputFilename.c_str());
+  writer->SetFileName((outputFolder+"/out.vtp").c_str());
   writer->Write();
 
 
